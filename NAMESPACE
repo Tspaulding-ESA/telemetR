@@ -1,0 +1,5 @@
+exportPattern("^[[:alpha:]]+")
+@import dplyr
+@import lubridate
+@import tidyr
+@import ggplot2
