@@ -345,7 +345,7 @@ rSSR_plot <- function(rSSR, opt_mbp_df){
 #' Build Continuous Residence Events
 #'
 #' Takes a dataframe with telemetry detection data and a single optimum blanking
-#' period chosen from the output of `opt_mbp()`, and groups detections by
+#' period chosen from the output of opt_mbp(), and groups detections by
 #' individual, site, and any supplied grouping variables into residence events.
 #' The residence events are created by collecting detections which occur within
 #' the selected optimum maximum blanking period from the next detection. This
@@ -366,7 +366,7 @@ rSSR_plot <- function(rSSR, opt_mbp_df){
 #' @param time_unit the unit of time used by the optimum maximum blanking
 #' period, often on the same scale as the ping rate for the transmitter.
 #' @param opt_mbp a single optimum blanking period chosen from the output of
-#' `opt_mbp()`
+#' opt_mbp()
 #' @return A dataframe of detections which has been condensed into continuous
 #' residence events based on the optimum maximum blanking period selected.
 #' @export
