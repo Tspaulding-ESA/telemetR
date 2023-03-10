@@ -16,7 +16,7 @@
 #' tags/transmitters implanted or attached to an organism
 #' @return A dataframe which has been filtered to remove false positives
 #' @export
-second_filter_lotek <- function(org_file, time_unit, multipath, org_ping_rate){
+filter_2h <- function(org_file, time_unit, multipath_time, org_ping_rate){
   filtered <- org_file
   filtered <- dplyr::group_by(.data = filtered, Tag_Code)
   filtered <- dplyr::arrange(.data = filtered, Tag_Code, DateTime_Local)
@@ -72,7 +72,7 @@ second_filter_lotek <- function(org_file, time_unit, multipath, org_ping_rate){
 #' tags/transmitters implanted or attached to an organism
 #' @return A dataframe which has been filtered to remove false positives
 #' @export
-second_filter_tekno <- function(org_file, time_unit, multipath_time,
+filter_4h <- function(org_file, time_unit, multipath_time,
                                 org_ping_rate){
   filtered <- org_file
   filtered$pr_nom <- as.numeric(filtered$tag_pulse_rate_interval_nominal)

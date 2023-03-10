@@ -158,10 +158,6 @@ duration_compare <- function(event_dur, var_groups=NULL, time_seq){
 #'  certain time (t)
 #' @param var_groups a single string or vector of strings of the columns which
 #' should be used to group organisms. Common groupings are species and cohorts.
-#' @param time_seq a vector of times on the same scale as the ping rate. The
-#' largest value of the sequence should be greater that the longest duration
-#' produced using blanking event, and the smallest should be shorter than the
-#' smallest blanking period.
 #' @param time_unit the unit of time used to calculate durations
 #' @return A plot of the proportion of events created by each potential
 #' blanking period at each time (t).
@@ -305,26 +301,26 @@ opt_mbp <- function(rSSR_df, thresh_values){
 #' convergence thresholds and optimum mbps
 #' @return A plot of the rSSR curve, convergence thresholds, and optimum mbps
 #' @export
-rSSR_plot <- function(rSSR, opt_mbp_df){
+rSSR_plot <- function(rSSR_df, opt_mbp_df){
 
-  rSSR_plot <- ggplot(rSSR) +
-    geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1), color = "blue") +
-    geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1), size = .5, color = "red") +
+  rSSR_plot <- ggplot(rSSR_df) +
+    geom_line(aes(x = mbp_n / 60, y = rSSR_df, group = 1), color = "blue") +
+    geom_point(aes(x = mbp_n / 60, y = rSSR_df, group = 1), size = .5, color = "red") +
     geom_hline(data = opt_mbp_df, aes(yintercept = threshold, color = factor(sig_level)), linetype = "dashed") +
     geom_vline(data = opt_mbp_df, aes(xintercept = opt_mbp/60, color = factor(sig_level)), linetype = "dashed")+
-    geom_line(aes(x = mbp_n / 60, y = zoo::rollmean(rSSR,7, na.pad = TRUE), group = 1), color = "grey50") +
+    geom_line(aes(x = mbp_n / 60, y = zoo::rollmean(rSSR_df,7, na.pad = TRUE), group = 1), color = "grey50") +
     scale_color_discrete(name = "Significance Level")+
     scale_x_continuous(expand = c(0, 0)) +
     labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
     facet_grid(as.formula(paste("~", var_groups)))+
     theme_classic()
 
-  Log_rSSR_plot <- ggplot(rSSR) +
-    geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1), color = "blue") +
-    geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1), size = .5, color = "red") +
+  Log_rSSR_plot <- ggplot(rSSR_df) +
+    geom_line(aes(x = mbp_n / 60, y = rSSR_df, group = 1), color = "blue") +
+    geom_point(aes(x = mbp_n / 60, y = rSSR_df, group = 1), size = .5, color = "red") +
     geom_hline(data = opt_mbp_df, aes(yintercept = threshold, color = factor(sig_level)), linetype = "dashed") +
     geom_vline(data = opt_mbp_df, aes(xintercept = opt_mbp/60, color = factor(sig_level)), linetype = "dashed")+
-    geom_smooth(aes(x = mbp_n / 60, y = rSSR, group = 1),
+    geom_smooth(aes(x = mbp_n / 60, y = rSSR_df, group = 1),
                 method = "loess",
                 span = 0.7,
                 color = "grey50",
