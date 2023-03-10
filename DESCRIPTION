@@ -25,7 +25,8 @@ LazyData: true
 Imports:
         dplyr,
         tidyr,
-        lubridate
+        lubridate,
+        zoo
 Suggests: 
     knitr,
     rerddap,
