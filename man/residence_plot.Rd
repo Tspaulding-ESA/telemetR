@@ -15,11 +15,6 @@ certain time (t)}
 should be used to group organisms. Common groupings are species and cohorts.}
 
 \item{time_unit}{the unit of time used to calculate durations}
-
-\item{time_seq}{a vector of times on the same scale as the ping rate. The
-largest value of the sequence should be greater that the longest duration
-produced using blanking event, and the smallest should be shorter than the
-smallest blanking period.}
 }
 \value{
 A plot of the proportion of events created by each potential

@@ -4,15 +4,15 @@
 \alias{rSSR_plot}
 \title{Plot the rSSR Curve and Convergence Thresholds and Optimum MBP}
 \usage{
-rSSR_plot(rSSR, opt_mbp_df)
+rSSR_plot(rSSR_df, opt_mbp_df)
 }
 \arguments{
-\item{opt_mbp_df}{a dataframe created by opt_mbp showing the values for the
-convergence thresholds and optimum mbps}
-
 \item{rSSR_df}{a dataframe created by created by renorm_SSRduration compare
 showing the renormalized sum of squares of the residuals between one
 potential blanking period and the next.}
+
+\item{opt_mbp_df}{a dataframe created by opt_mbp showing the values for the
+convergence thresholds and optimum mbps}
 }
 \value{
 A plot of the rSSR curve, convergence thresholds, and optimum mbps
