@@ -34,7 +34,6 @@ format_receivers <- function(data, var_receiver_serial, var_receiver_make,
            Make = as.character(Make),
            receiver_start =
              lubridate::parse_date_time(as.character(receiver_start),
-                                        tz = local_time_zone,
-                                        ))
+                                        tz = local_time_zone))
   return(df)
 }
