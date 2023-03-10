@@ -79,11 +79,11 @@ blanking_event <- function(data,var_site,var_Id,var_datetime,var_groups = NULL,
                        n_val)
 
   event <- setup %>%
-    ungroup() %>%
-    group_by(across(all_of(c(var_Id, "n_val")))) %>%
-    mutate(ping_rate = all_of(var_ping_rate),
-           across(var_site, .fns = ~.x == lag(.x), .names = "same_loc"),
-           across(c(var_datetime), .fns = ~ difftime(.x,
+    dplyr::ungroup() %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(c(var_Id, "n_val")))) %>%
+    dplyr::mutate(ping_rate = dplyr::all_of(var_ping_rate),
+           dplyr::across(var_site, .fns = ~.x == lag(.x), .names = "same_loc"),
+           dplyr::across(c(var_datetime), .fns = ~ difftime(.x,
                                                      lag(.x),
                                                      units = time_unit) <= (n_val*ping_rate),
                   .names = "same_time"),
@@ -94,19 +94,19 @@ blanking_event <- function(data,var_site,var_Id,var_datetime,var_groups = NULL,
            event_change = cumsum(event_change_binary))
 
   event_dur <- event %>%
-    group_by(across(all_of(c(var_groups, var_Id, "n_val", "ping_rate",
+    dplyr::group_by(dplyr::across(dplyr::all_of(c(var_groups, var_Id, "n_val", "ping_rate",
                            "event_change", var_site)))) %>%
-    summarise(across(all_of(var_datetime),
+    dplyr::summarise(dplyr::across(dplyr::all_of(var_datetime),
                      .fns = list(start_time = ~ min(.x, na.rm = TRUE),
                                  end_time = ~ max(.x, na.rm = TRUE),
                                  n_det = ~ n()),
                      .names = "{.fn}"
                      )) %>%
-    mutate(duration = as.numeric(difftime(end_time,
+    dplyr::mutate(duration = as.numeric(difftime(end_time,
                                           start_time,
                                           units = "sec"))
     ) %>%
-    ungroup()
+    dplyr::ungroup()
 
   return(event_dur)
 }
@@ -138,11 +138,11 @@ duration_compare <- function(event_dur, var_groups=NULL, time_seq){
     tmp <- event_dur
     tmp$resident <- tmp$duration >= t
     time_list[[as.character(t)]] <- tmp %>%
-      group_by(across(all_of(c(var_groups, "n_val", "ping_rate")))) %>%
-      summarise(prop_res = sum(resident)/n())
+      dplyr::group_by(dplyr::across(dplyr::all_of(c(var_groups, "n_val", "ping_rate")))) %>%
+      dplyr::summarise(prop_res = sum(resident)/n())
   }
   time_df = bind_rows(time_list, .id = "t") %>%
-    mutate(t = as.numeric(t),
+    dplyr::mutate(t = as.numeric(t),
            mbp_n = ping_rate * n_val)
   return(time_df)
 }
@@ -164,17 +164,15 @@ duration_compare <- function(event_dur, var_groups=NULL, time_seq){
 #' @export
 residence_plot <- function(time_df, var_groups = NULL, time_unit){
   max_t <- time_df %>%
-    group_by(t) %>%
-    summarise(mean = mean(prop_res)) %>%
-    filter(mean != 0) %>%
-    ungroup %>%
-    pull(t) %>%
+    dplyr::group_by(t) %>%
+    dplyr::summarise(mean = mean(prop_res)) %>%
+    dplyr::filter(mean != 0) %>%
+    dplyr::ungroup %>%
+    dplyr::pull(t) %>%
     max()
 
-  library(ggplot2)
-
   if(is.null(var_groups)){
-  ggplot(time_df %>% filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
+  ggplot(time_df %>% dplyr::filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
     geom_line() +
     scale_y_log10() +
     labs(x = paste("Time (",time_unit,")"), y = "Proportion of Event Lengths > Time")+
@@ -182,7 +180,7 @@ residence_plot <- function(time_df, var_groups = NULL, time_unit){
     theme_classic()+
     theme(legend.position = "none")
   }else{
-    ggplot(time_df %>% filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
+    ggplot(time_df %>% dplyr::filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
       geom_line() +
       scale_y_log10() +
       labs(x = paste("Time (",time_unit,")"), y = "Proportion of Event Lengths > Time")+
@@ -211,9 +209,9 @@ residence_plot <- function(time_df, var_groups = NULL, time_unit){
 #' @export
 renorm_SSR <- function(time_df, var_groups=NULL){
   SR <- time_df %>%
-    ungroup() %>%
-    group_by(across(all_of(var_groups))) %>%
-    mutate(SR = ifelse(!is.na(lead(t)),
+    dplyr::ungroup() %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(var_groups))) %>%
+    dplyr::mutate(SR = ifelse(!is.na(lead(t)),
                        ifelse(lead(t) == t,
                               (lead(prop_res) - prop_res)^2,
                               0
@@ -222,9 +220,9 @@ renorm_SSR <- function(time_df, var_groups=NULL){
     ))
 
   rSSR <- SR %>%
-    group_by(across(all_of(c(var_groups,"mbp_n")))) %>%
-    summarise(SSR = sum(as.numeric(SR)), n = n()) %>%
-    mutate(rSSR = SSR / n)
+    dplyr::group_by(dplyr::across(dplyr::all_of(c(var_groups,"mbp_n")))) %>%
+    dplyr::summarise(SSR = sum(as.numeric(SR)), n = n()) %>%
+    dplyr::mutate(rSSR = SSR / n)
 
   return(rSSR)
 }
@@ -254,9 +252,9 @@ conv_thresholds <- function(rSSR_df, var_groups, thresh_levels = c(0.05,0.01,0.0
 
   for(s in 1:length(thresh_levels)){
     thresh_list[[s]] <- rSSR_df %>%
-      group_by(across(all_of(var_groups)))%>%
-      summarize(min_val = min(rSSR), max_val = max(rSSR)) %>%
-      mutate(threshold = ((max_val - min_val) * thresh_levels[s]) + min_val,
+      dplyr::group_by(dplyr::across(dplyr::all_of(var_groups)))%>%
+      dplyr::summarise(min_val = min(rSSR), max_val = max(rSSR)) %>%
+      dplyr::mutate(threshold = ((max_val - min_val) * thresh_levels[s]) + min_val,
              thresh_level = thresh_levels[s])
     }
 
@@ -369,19 +367,19 @@ rSSR_plot <- function(rSSR_df, opt_mbp_df){
 build_residence <- function(data, var_groups, var_Id, var_datetime, var_site,
                             opt_mbp, time_unit){
   residence <- data %>%
-    filter_at(all_of(c(var_groups, var_site, var_Id, var_datetime)),
+    filter_at(dplyr::all_of(c(var_groups, var_site, var_Id, var_datetime)),
               all_vars(!is.na(.))) %>%
-    group_by(across(all_of(c(var_groups,var_Id)))) %>%
-    arrange(across(all_of(c(var_groups, var_Id, var_datetime)))) %>%
-    mutate(across(var_site,
+    dplyr::group_by(dplyr::across(dplyr::all_of(c(var_groups,var_Id)))) %>%
+    arrange(dplyr::across(dplyr::all_of(c(var_groups, var_Id, var_datetime)))) %>%
+    dplyr::mutate(dplyr::across(var_site,
                   .fns = ~.x == lag(.x),
                   .names = "same_loc"),
-           across(var_datetime,
+           dplyr::across(var_datetime,
                   .fns = ~ difftime(.x,lag(.x), units = time_unit) <= opt_mbp,
                   .names = "same_time"),
            same_group = if_all(any_of(c(var_groups)),
                                .fns = ~.x == lag(.x)),
-           across(.cols = same_loc:same_group,
+           dplyr::across(.cols = same_loc:same_group,
                   .fns = ~ifelse(is.na(.x),TRUE,.x)),
            event_change_binary = if_any(.cols = same_loc:same_group,
                                         .fns = ~ifelse(.x == FALSE, TRUE, FALSE)),
@@ -389,19 +387,19 @@ build_residence <- function(data, var_groups, var_Id, var_datetime, var_site,
                                         FALSE,
                                         event_change_binary),
            event_number = cumsum(event_change_binary)) %>%
-    ungroup() %>%
-    group_by(across(all_of(c(var_groups, var_site,
+    dplyr::ungroup() %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(c(var_groups, var_site,
                              "event_number", var_Id)))) %>%
-    summarise(across(all_of(var_datetime),
+    dplyr::summarise(dplyr::across(dplyr::all_of(var_datetime),
                      .fns = list(start_time = ~ min(.x, na.rm = TRUE),
                                  end_time = ~ max(.x, na.rm = TRUE),
                                  n_det = ~ n()),
                      .names = "{.fn}")) %>%
-    ungroup() %>%
-    select(all_of(c(var_groups, var_Id, "event_number", var_site,
+    dplyr::ungroup() %>%
+    dplyr::select(dplyr::all_of(c(var_groups, var_Id, "event_number", var_site,
                     "start_time", "end_time", "n_det"))) %>%
-    mutate(duration = difftime(end_time,start_time,units = time_unit)) %>%
-    arrange(across(all_of(c(var_groups, var_Id, "start_time")))) %>%
+    dplyr::mutate(duration = difftime(end_time,start_time,units = time_unit)) %>%
+    arrange(dplyr::across(dplyr::all_of(c(var_groups, var_Id, "start_time")))) %>%
     distinct()
 
   return(residence)
