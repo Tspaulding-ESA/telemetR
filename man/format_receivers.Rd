@@ -10,7 +10,8 @@ format_receivers(
   var_receiver_make,
   var_receiver_deploy,
   var_receiver_retrieve,
-  local_time_zone
+  local_time_zone,
+  time_format
 )
 }
 \arguments{
@@ -32,6 +33,9 @@ date and time the receiver was retrieved}
 
 \item{local_time_zone}{the local timezone used for analyses. Uses tz database
 names (e.g. "America/Los_Angeles" for Pacific Time)}
+
+\item{time_format}{a string value indicating the datetime format of all time
+fields}
 }
 \value{
 A dataframe which contains fields renamed to match those required by

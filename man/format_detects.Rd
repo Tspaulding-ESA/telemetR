@@ -8,10 +8,11 @@ format_detects(
   data,
   var_Id,
   var_datetime_local,
-  var_frequency,
+  var_frequency = NULL,
   var_receiver_serial,
-  var_receiver_make,
-  local_time_zone
+  var_receiver_make = NULL,
+  local_time_zone,
+  time_format
 )
 }
 \arguments{
@@ -27,17 +28,20 @@ to POSIXct format and should be converted to the local timezone.}
 
 \item{var_frequency}{the column name, in quotes, which identifies the maximum
 temporal frequency at which transmitters in organisms emit a detectable
-signal.}
+signal, only for use before JSATS filtering.}
 
 \item{var_receiver_serial}{the column name, in quotes, which identifies the
 serial number of the detection receiver}
 
 \item{var_receiver_make}{the column name, in quotes, which identifies the
 make or brand of the detection receiver. Must be one of "ATS", "Lotek", or
-"Tekno"}
+"Tekno", only for use before JSATS filtering.}
 
 \item{local_time_zone}{the local timezone used for analyses. Uses tz database
 names (e.g. "America/Los_Angeles" for Pacific Time)}
+
+\item{time_format}{a string value indicating the datetime format of all time
+fields}
 }
 \value{
 A standardized detection dataframe which can be read by filteRjsats
