@@ -17,4 +17,5 @@ globalVariables(c("%>%",".","DateTime_Local","Make","ReceiverSN","RefTag","SSR",
                   "scale_x_continuous","scale_y_log10","select","setup_blank",
                   "sig_level","start_time","summarise","summarize","tag_life",
                   "tag_pulse_rate_interval_nominal","theme","theme_classic",
-                  "threshold","time_diff_lag","ungroup","unit","var_groups"))
+                  "threshold","time_diff_lag","ungroup","unit","var_groups",
+                  "receiver_end", "td", "thresh_level"))

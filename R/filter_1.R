@@ -23,6 +23,7 @@
 #' tags/transmitters used as beacon or reference tags to check receiver
 #' functionality.
 #' @return A standardized detection dataframe with multipath detects removed
+#' @import dplyr
 #' @export
 prefilter <- function(data, reference_tags, time_unit, multipath_time,
                       org_ping_rate, beacon_ping){

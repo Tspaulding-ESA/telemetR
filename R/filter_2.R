@@ -14,6 +14,7 @@
 #' days, weeks, months)
 #' @return A filtered dataframe converting the raw detection data into rows
 #' of detections
+#' @import dplyr
 #' @export
 add_org <- function(prefilter_file, org, time_before_detection, time_unit){
   org_tmp <- org[org$org_release_date >

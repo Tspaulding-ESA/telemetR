@@ -1,0 +1,35 @@
+#' Compare the duration of Potential Blanking Periods
+#'
+#' Takes a dataframe of detection data which has been condensed by potential
+#' blanking periods and compares the duration of each event to a common sequence
+#' of increasing times. If the event is longer than the duration it is
+#' flagged as "survived". The proportion of events which survive for each
+#' potential blanking period at each time (t) is then calculated.
+#'
+#' @param event_dur the detection dataframe which has been condensed into
+#' discrete events using each potential blanking period.
+#' @param var_groups a single string or vector of strings of the columns which
+#' should be used to group organisms. Common groupings are species and cohorts.
+#' @param time_seq a vector of times on the same scale as the ping rate. The
+#' largest value of the sequence should be greater that the longest duration
+#' produced using blanking event, and the smallest should be shorter than the
+#' smallest blanking period.
+#' @return A dataframe which contains the proportion of "survived" events
+#' created by each potential blanking period for each time (t).
+#' @import dplyr
+#' @export
+duration_compare <- function(event_dur, var_groups=NULL, time_seq){
+  time_list <- list()
+
+  for (t in time_seq){
+    cat("\rt =", t)
+    tmp <- event_dur
+    tmp$resident <- tmp$duration >= t
+    time_list[[as.character(t)]] <- tmp |>
+      dplyr::group_by(dplyr::across(dplyr::all_of(c(var_groups, "mbp_n")))) |>
+      dplyr::summarise(prop_res = sum(resident)/n())
+  }
+  time_df = bind_rows(time_list, .id = "t") |>
+    dplyr::mutate(t = as.numeric(t))
+  return(time_df)
+}
