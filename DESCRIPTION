@@ -5,7 +5,7 @@ Version: 1.0
 Authors@R: 
     person("Taylor", "Spaulding", , "tspaulding@esassoc.com", 
     role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4381-5296"))
-Description: A package for analyzing telemetry datasets generalized to allow
+Description:Analyze telemetry datasets generalized to allow
     any tecnology. The filtering steps check for false positives caused by 
     reflected transmissions from surfaces and false pings from other noise 
     generating equipment. The filters are based on JSATS filtering algorithms
