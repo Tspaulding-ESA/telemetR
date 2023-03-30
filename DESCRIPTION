@@ -18,7 +18,7 @@ Description: A package for analyzing telemetry datasets generalized to allow
     Capello M, Robert M, Soria M, Potin G, Itano D, Holland K, et al. (2015) 
     A Methodological Framework to Estimate the Site Fidelity of Tagged Animals 
     Using Passive Acoustic Telemetry. PLoS ONE 10(8): e0134002. 
-    https://doi.org/10.1371/journal.pone.0134002 .
+    <https://doi.org/10.1371/journal.pone.0134002> .
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -32,7 +32,7 @@ Suggests:
     knitr,
     rerddap,
     rmarkdown
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.1)
 VignetteBuilder: knitr
