@@ -63,14 +63,6 @@ rSSR_plot <- function(rSSR_df, opt_mbp_df, var_groups=NULL){
       theme(legend.position = "none",
             strip.background = element_blank(),
             strip.text = element_blank())
-
-    vp1 <- grid::viewport(width = 11, height = 6,
-                          x = 5.5, y = 3, default.units = "inches")
-    vp2 <- grid::viewport(width = 4, height = 3,
-                          x = 7, y = 4, default.units = "inches")
-    dev.new()
-    print(main_plot, vp = vp1)
-    print(log_plot, vp = vp2)
     }
   if(!is.null(var_groups)){
     main_plot <- ggplot(rSSR_df) +
@@ -119,16 +111,10 @@ rSSR_plot <- function(rSSR_df, opt_mbp_df, var_groups=NULL){
       theme(legend.position = "none",
             strip.background = element_blank(),
             strip.text = element_blank())
-
-    vp1 <- grid::viewport(width = 11, height = 6,
-                          x = 5.5, y = 3, default.units = "inches")
-    vp2 <- grid::viewport(width = 4, height = 3,
-                          x = 7, y = 4, default.units = "inches")
-
-    dev.new()
-    print(main_plot, vp = vp1)
-    print(log_plot, vp = vp2)
   }
+
+  print(main_plot)
+  print(log_plot)
 }
 #' @examples
 #'

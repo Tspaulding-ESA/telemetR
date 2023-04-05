@@ -3,7 +3,7 @@
 \docType{data}
 \name{filtered_detections}
 \alias{filtered_detections}
-\title{Completely Filtered Detection Data}
+\title{Example Completely Filtered Detection Data}
 \format{
 ## `filtered_detections`
 A data frame with 41,000 rows and 26 columns:

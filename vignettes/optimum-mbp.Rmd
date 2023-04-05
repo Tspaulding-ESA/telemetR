@@ -49,30 +49,13 @@ detects <- format_detects(detects,
                           time_format = "%Y-%m-%d %H:%M:%S")
 ```
 
-```{r, setup the new detection frame for optimum mbp analysis, echo = TRUE}
-# Join the Receiver data to the detection data by the receiver serial number
-data <- dplyr::left_join(detects, receivers, 
-                       by = c("ReceiverSN"="ReceiverSN"))
-
-# Receivers can be redeployed leading to multiple instances of the same receiver
-# serial number at multiple sites. Remove any rows where the detection does not
-# fall between the start and end times of the given receiver deployment.
-data <- data |> 
-  dplyr::rowwise() |> 
-  dplyr::filter(dplyr::between(DateTime_Local, 
-                               receiver_start, 
-                               receiver_end))
-
-data <- dplyr::left_join(data, fish, by = c("Tag_Code" = "Tag_Code"))
-head(data)
-```
 
 ```{r, Begin the blanking period analysis, echo = TRUE}
 # Build a new df which uses a range of blanking times to reprocess the original
 # detection data (this is a slow process, especially for large datasets or
 # large sequences of n)
 
-blanked <- blanking_event(data,
+blanked <- blanking_event(detects,
                      #Each general location is distinct enough to be a site
                      var_site = "receiver_general_location",
                      #Group the data by species, run, and origin (optional)
@@ -133,4 +116,6 @@ thresh <- telemetR::conv_thresholds(rSSR, var_groups = "fish_type",
 optimums <- opt_mbp(rSSR, thresh)
 
 rSSR_plot(rSSR, optimums, var_groups = "fish_type")
+# Note: This would be a bad choice of maximum blanking period. We have not yet 
+# reached convergence
 ```

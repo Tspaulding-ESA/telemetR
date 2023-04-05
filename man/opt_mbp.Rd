@@ -15,11 +15,11 @@ potential blanking period and the next.}
 the chosen convergence thresholds.}
 }
 \value{
-A dataframe showing the convergence value and corresponding maximum
-blanking period.
+A dataframe showing the convergence value and corresponding optimal
+maximum blanking period for each grouping.
 }
 \description{
-Takes dataframes created by renorm_SSR and conv_thresholds and determines the
-corresponding "optimum" maximum blanking period (MBP) for each convergence
-threshold.
+Takes dataframes created by `renorm_SSR()` and `conv_thresholds()` and
+determines the corresponding "optimum" maximum blanking period (MBP) for each
+convergence threshold.
 }

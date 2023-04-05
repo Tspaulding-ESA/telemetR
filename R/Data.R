@@ -204,7 +204,7 @@
 #'  \item{fish_type}{Generally a strain, run, and species of fish (e.g.
 #'   Nimbus Fall Chinook = Fall-run Chinook Salmon from Nimbus Hatchery)}
 #'  \item{Tag_Code}{The hexadecimal acoustic tag ID code}
-#'  \itme{mbp_n}{the maximum blanking period used to create this event}
+#'  \item{mbp_n}{the maximum blanking period used to create this event}
 #'  \item{event_change}{An increasing number which identifies the event number;
 #'   one event per fish per site for all detections which occur within `mbp_n`
 #'   seconds of the next.}
@@ -254,14 +254,14 @@
 #' }
 "ex_rSSR"
 
-#' Example 95% Convergence Threshold
+#' Example 95 Percent Convergence Threshold
 #'
 #' Example output from the `conv_thresholds()` function, calculating the 95%
 #' convergence thresholds for the rSSR data found in `ex_rSSR`.
 #'
 #' @format ## `conv_thresh`
 #' A data frame with 1 rows and 5 columns:
-#' \desrcibe{
+#' \describe{
 #'  \item{fish_type}{Generally a strain, run, and species of fish (e.g.
 #'   Nimbus Fall Chinook = Fall-run Chinook Salmon from Nimbus Hatchery)}
 #'  \item{min_val}{The minimum rSSR value}

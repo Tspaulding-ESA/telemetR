@@ -20,8 +20,8 @@ potential blanking period and the subsequent one.
 }
 \description{
 Takes a dataframe of the proportion of events created by each potential
-blanking period which "survived" a certain time (t) and calculates the sum
-of squares of the residuals between one potential blanking period and the
-next. This result is then renormalized by dividing the result by the number
-of events created.
+blanking period which "survived" a certain time (t) created by
+`duration_compare()` and calculates the sum of squares of the residuals
+between one potential blanking period and the next. This result is then
+renormalized by dividing the result by the number of events created.
 }
