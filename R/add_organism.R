@@ -1,13 +1,14 @@
 #' Add Organism Data to a Detection Dataframe
 #'
-#' This function takes a prefiltered detection dataframe from prefilter() and
-#' joins it to organism data formatted using the format_org() function.
+#' This function takes a prefiltered detection dataframe from `prefilter()` and
+#' joins it to organism data formatted using the `format_org()` function.
 #' Detections are then filtered further based on the date and time of tag
 #' release and expected battery life. Detections occurring before release of the
 #' tag or after 2x the expected battery life are removed.
 #'
-#' @param prefilter_file a prefiltered detection dataframe from prefilter()
-#' @param org a dataframe of organism data rectrieved from get_org_data()
+#' @param prefilter_file a prefiltered detection dataframe from `prefilter()`
+#' @param org a dataframe of organism data retrieved from `get_org_data()` or
+#' `format_org()`
 #' @param time_before_detection How long before detection could an organism be
 #' released and still detected? Generally 2x the expected tag life.
 #' @param time_unit The unit of time used for analyses (seconds, minutes, hours,

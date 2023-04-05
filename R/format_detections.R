@@ -27,8 +27,8 @@
 #' @import dplyr
 #' @export
 format_detects <- function(data, var_Id, var_datetime_local, var_frequency = NULL,
-                         var_receiver_serial, var_receiver_make = NULL,
-                         local_time_zone, time_format){
+                           var_receiver_serial, var_receiver_make = NULL,
+                           local_time_zone, time_format){
   df <- data
   if(is.null(var_receiver_make) & is.null(var_frequency)){
     df <- data %>%
@@ -42,8 +42,8 @@ format_detects <- function(data, var_Id, var_datetime_local, var_frequency = NUL
                                                  tz = local_time_zone,
                                                  orders = c(time_format)),
                     ReceiverSN = as.character(ReceiverSN))
-    return(df)
-  } else if (!is.null(var_receiver_make)&!is.null(var_frequency)){
+    return(df)}
+  if(!is.null(var_receiver_make)&!is.null(var_frequency)){
     df <- data %>%
       dplyr::rename("Tag_Code" = var_Id,
                     "DateTime_Local" = var_datetime_local,
@@ -53,13 +53,24 @@ format_detects <- function(data, var_Id, var_datetime_local, var_frequency = NUL
     df <- df %>%
       dplyr::mutate(Tag_Code = as.character(Tag_Code),
                     DateTime_Local =
-                    lubridate::parse_date_time(as.character(DateTime_Local),
-                                               tz = local_time_zone,
-                                               orders = c(time_format)),
+                      lubridate::parse_date_time(as.character(DateTime_Local),
+                                                 tz = local_time_zone,
+                                                 orders = c(time_format)),
                     ReceiverSN = as.character(ReceiverSN),
                     Make = as.character(Make))
-    return(df)
-  } else {writeLines(c("Are you formatting for filtering?",
-  "Receiver Make & frequency must be supplied, else leave NULL",
-  "Please refer to documentation"))}
+    return(df)}
+  if(any(is.null(var_receiver_make),is.null(var_frequency))){
+    errorCondition(writeLines(c("Are you formatting for filtering?",
+                                "Receiver Make & frequency must be supplied, else leave NULL",
+                                "Please refer to documentation")))}
 }
+#' @examples
+#'
+#' # Rename columns to work with functions
+#' format_detects(data = filtered_detections,
+#'                var_Id = "tag_id",
+#'                var_datetime_local = "local_time",
+#'                var_receiver_serial = "serial",
+#'                local_time_zone = "America/Los_Angeles",
+#'                time_format = "%Y-%m-%d %H:%M:%S")
+#'

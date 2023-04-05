@@ -45,3 +45,14 @@ format_receivers <- function(data, var_receiver_serial, var_receiver_make,
                                         orders = c(time_format)))
   return(df)
 }
+#' @examples
+#'
+#' # Rename columns to work with functions
+#' format_receivers(data = receivers,
+#'                  var_receiver_serial = "receiver_serial_number",
+#'                  var_receiver_make = "receiver_make",
+#'                  var_receiver_deploy = "receiver_start",
+#'                  var_receiver_retrieve = "receiver_end",
+#'                  local_time_zone = "America/Los_Angeles",
+#'                  time_format = "%m-%d-%Y %H:%M:%S")
+#'
