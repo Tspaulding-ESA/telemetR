@@ -37,8 +37,13 @@ prefilter <- function(data, reference_tags, time_unit, multipath_time,
   temp$time_diff_lag = difftime(temp$DateTime_Local, dplyr::lag(temp$DateTime_Local),
                                 units = time_unit)
   temp$multipath = ifelse(temp$time_diff_lag >
-                            lubridate::period( x = multipath_time,
-                                               units = time_unit)|
+                            lubridate::period(num = multipath_time,
+                                               units = dplyr::case_when(
+                                                 time_unit == "secs" ~ "seconds",
+                                                 time_unit == "mins" ~ "minutes",
+                                                 time_unit == "hours" ~ "hours",
+                                                 time_unit == "days" ~ "days",
+                                                 time_unit == "weeks" ~ "weeks"))|
                             temp$Tag_Code != dplyr::lag(temp$Tag_Code), FALSE, TRUE)
   temp$multipath = ifelse(is.na(temp$time_diff_lag) &
                             dplyr::lead(temp$multipath) == FALSE,
@@ -50,14 +55,24 @@ prefilter <- function(data, reference_tags, time_unit, multipath_time,
   temp$time_diff_lag = difftime(temp$DateTime_Local, dplyr::lag(temp$DateTime_Local),
                                 units = time_unit)
   temp$time_diff_lag = ifelse(temp$Tag_Code != dplyr::lag(temp$Tag_Code),NA,temp$time_diff_lag)
-  temp$RefTag = ifelse(temp$Tag_Decimal %in% reference_tags, TRUE, FALSE) #Is it a ref tag?
+  temp$RefTag = ifelse(temp$Tag_Code %in% reference_tags, TRUE, FALSE) #Is it a ref tag?
   temp$CheckMBP = ifelse(temp$RefTag == TRUE, # If a ref tag,
                          (temp$time_diff_lag <
-                            lubridate::period(x = (3*beacon_ping), # 2 hits in 3*Max PRI
-                                              units = time_unit)),
+                            lubridate::period(num = (3*beacon_ping), # 2 hits in 3*Max PRI
+                                              units = dplyr::case_when(
+                                                time_unit == "secs" ~ "seconds",
+                                                time_unit == "mins" ~ "minutes",
+                                                time_unit == "hours" ~ "hours",
+                                                time_unit == "days" ~ "days",
+                                                time_unit == "weeks" ~ "weeks"))),
                          (temp$time_diff_lag <
-                            lubridate::period(x = (12*org_ping_rate),
-                                              units = time_unit))) # 2 hits in 12*Max PRI
+                            lubridate::period(num = (12*org_ping_rate),
+                                              units = dplyr::case_when(
+                                                time_unit == "secs" ~ "seconds",
+                                                time_unit == "mins" ~ "minutes",
+                                                time_unit == "hours" ~ "hours",
+                                                time_unit == "days" ~ "days",
+                                                time_unit == "weeks" ~ "weeks")))) # 2 hits in 12*Max PRI
   temp$CheckMBP = ifelse(is.na(temp$time_diff_lag) &
                            dplyr::lead(temp$CheckMBP) == FALSE, #First Detection is FALSE if 2nd is FALSE
                          FALSE,
@@ -69,8 +84,13 @@ prefilter <- function(data, reference_tags, time_unit, multipath_time,
                            dplyr::lead(temp$time_diff_lag) <
                            # If invalid based on last detection,
                            # but following detection is <12x ping_rate
-                           lubridate::period(x = (12*org_ping_rate),
-                                             units = time_unit),
+                           lubridate::period(num = (12*org_ping_rate),
+                                             units = dplyr::case_when(
+                                               time_unit == "secs" ~ "seconds",
+                                               time_unit == "mins" ~ "minutes",
+                                               time_unit == "hours" ~ "hours",
+                                               time_unit == "days" ~ "days",
+                                               time_unit == "weeks" ~ "weeks")),
                          TRUE, #Valid
                          temp$CheckMBP) #Return Previous Assignment
   temp <- temp[temp$CheckMBP == TRUE,]
@@ -87,3 +107,22 @@ prefilter <- function(data, reference_tags, time_unit, multipath_time,
   prefilter_file <- temp
   prefilter_file
 }
+#' @examples
+#'
+#' Run the prefilter on a set of raw detection data
+#'
+#' #format the detection data
+#' detects_formatted <- format_detects(data = raw_detections,
+#'                                     var_Id = "tag_id",
+#'                                     var_datetime_local = "local_time",
+#'                                     var_receiver_serial = "serial",
+#'                                     local_time_zone = "America/Los_Angeles",
+#'                                     time_format = "%Y-%m-%d %H:%M:%S")
+#' #apply the prefilter
+#' prefilter(data = detects_formatted,
+#'           reference_tags = reftags,
+#'           time_unit = "secs",
+#'           multipath_time = 0.3,
+#'           org_ping_rate = 3,
+#'           beacon_ping = 30)
+#'

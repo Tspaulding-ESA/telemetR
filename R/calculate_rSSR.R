@@ -1,10 +1,10 @@
 #' Calculate the Renormalized Sum of Squared Residuals
 #'
 #' Takes a dataframe of the proportion of events created by each potential
-#' blanking period which "survived" a certain time (t) and calculates the sum
-#' of squares of the residuals between one potential blanking period and the
-#' next. This result is then renormalized by dividing the result by the number
-#' of events created.
+#' blanking period which "survived" a certain time (t) created by
+#' `duration_compare()` and calculates the sum of squares of the residuals
+#' between one potential blanking period and the next. This result is then
+#' renormalized by dividing the result by the number of events created.
 #'
 #' @param time_df a dataframe created by duration compare showing the proportion
 #'  of events created by each potential blanking period which "survived" a
@@ -34,3 +34,10 @@ renorm_SSR <- function(time_df, var_groups=NULL){
 
   return(rSSR)
 }
+#' @examples
+#'
+#' # Calculate the renormalized sum of squares from an example dataset of
+#' # duration comparisons
+#'
+#' renorm_SSR(time_test, var_groups = "fish_type")
+#'

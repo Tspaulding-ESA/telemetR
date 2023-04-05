@@ -17,7 +17,7 @@
 #' tags/transmitters implanted or attached to an organism
 #' @return A dataframe which has been filtered to remove false positives
 #' @export
-filter_4h <- function(org_file, time_unit, multipath_time,
+filter_2h <- function(org_file, time_unit, multipath_time,
                       org_ping_rate){
   filtered <- org_file
   filtered$pr_nom <- as.numeric(filtered$tag_pulse_rate_interval_nominal)
@@ -60,3 +60,10 @@ filter_4h <- function(org_file, time_unit, multipath_time,
 
   filtered
 }
+#' @examples
+#'
+#' # Apply a 2-hit filter to data previously prefiltered and with organism data
+#' filter_2h(org_file = dat_orgfilt,
+#'           time_unit = "secs",
+#'           multipath_time = 0.3,
+#'           org_ping_rate = 3)

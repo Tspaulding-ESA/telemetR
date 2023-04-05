@@ -16,103 +16,124 @@
 #' @import ggplot2
 #' @export
 rSSR_plot <- function(rSSR_df, opt_mbp_df, var_groups=NULL){
-if(is.null(var_groups)){
-  rSSR_plot <- ggplot(rSSR_df) +
-    geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
-              color = "blue") +
-    geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
-               size = .5, color = "red") +
-    geom_hline(data = opt_mbp_df,
-               aes(yintercept = threshold,
-                   color = factor(thresh_level)),
-               linetype = "dashed") +
-    geom_vline(data = opt_mbp_df,
-               aes(xintercept = opt_mbp/60,
-                   color = factor(thresh_level)),
-               linetype = "dashed")+
-    geom_line(aes(x = mbp_n / 60,
-                  y = zoo::rollmean(rSSR,7, na.pad = TRUE),
-                  group = 1),
-              color = "grey50") +
-    scale_color_discrete(name = "Significance Level")+
-    scale_x_continuous(expand = c(0, 0)) +
-    labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
-    theme_classic()
+  if(is.null(var_groups)){
+    main_plot <- ggplot(rSSR_df) +
+      geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                color = "blue") +
+      geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                 size = .5, color = "red") +
+      geom_hline(data = opt_mbp_df,
+                 aes(yintercept = threshold,
+                     color = factor(thresh_level)),
+                 linetype = "dashed") +
+      geom_vline(data = opt_mbp_df,
+                 aes(xintercept = opt_mbp/60,
+                     color = factor(thresh_level)),
+                 linetype = "dashed")+
+      geom_line(aes(x = mbp_n / 60,
+                    y = zoo::rollmean(rSSR,7, na.pad = TRUE),
+                    group = 1),
+                color = "grey50") +
+      scale_color_discrete(name = "Significance Level")+
+      scale_x_continuous(expand = c(0, 0)) +
+      labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
+      theme_classic()
 
-  Log_rSSR_plot <- ggplot(rSSR_df) +
-    geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
-              color = "blue") +
-    geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
-               size = .5, color = "red") +
-    geom_hline(data = opt_mbp_df,
-               aes(yintercept = threshold, color = factor(thresh_level)),
-               linetype = "dashed") +
-    geom_vline(data = opt_mbp_df,
-               aes(xintercept = opt_mbp/60, color = factor(thresh_level)),
-               linetype = "dashed")+
-    geom_smooth(aes(x = mbp_n / 60, y = rSSR, group = 1),
-                method = "loess",
-                span = 0.7,
-                color = "grey50",
-                se = FALSE)+
-    scale_x_continuous(expand = c(0, 0)) +
-    scale_y_log10() +
-    labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
-    theme_classic()
+    log_plot <- ggplot(rSSR_df) +
+      geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                color = "blue") +
+      geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                 size = .5, color = "red") +
+      geom_hline(data = opt_mbp_df,
+                 aes(yintercept = threshold, color = factor(thresh_level)),
+                 linetype = "dashed") +
+      geom_vline(data = opt_mbp_df,
+                 aes(xintercept = opt_mbp/60, color = factor(thresh_level)),
+                 linetype = "dashed")+
+      geom_smooth(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                  method = "loess",
+                  span = 0.7,
+                  color = "grey50",
+                  se = FALSE)+
+      scale_color_discrete(name = "Significance Level")+
+      scale_x_continuous(expand = c(0, 0)) +
+      scale_y_log10() +
+      labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
+      theme_classic()+
+      theme(legend.position = "none",
+            strip.background = element_blank(),
+            strip.text = element_blank())
 
-  vp <- grid::viewport(width = unit(4,"inches"), height = unit(3,"inches"),
-                       x = unit(4.5,"inches"), y = unit(2.75, "inches"))
+    vp1 <- grid::viewport(width = 11, height = 6,
+                          x = 5.5, y = 3, default.units = "inches")
+    vp2 <- grid::viewport(width = 4, height = 3,
+                          x = 7, y = 4, default.units = "inches")
+    dev.new()
+    print(main_plot, vp = vp1)
+    print(log_plot, vp = vp2)
+    }
+  if(!is.null(var_groups)){
+    main_plot <- ggplot(rSSR_df) +
+      geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                color = "blue") +
+      geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                 size = .5, color = "red") +
+      geom_hline(data = opt_mbp_df,
+                 aes(yintercept = threshold, color = factor(thresh_level)),
+                 linetype = "dashed") +
+      geom_vline(data = opt_mbp_df,
+                 aes(xintercept = opt_mbp/60, color = factor(thresh_level)),
+                 linetype = "dashed")+
+      geom_line(aes(x = mbp_n / 60,
+                    y = zoo::rollmean(rSSR,7, na.pad = TRUE),
+                    group = 1),
+                color = "grey50") +
+      scale_color_discrete(name = "Significance Level")+
+      scale_x_continuous(expand = c(0, 0)) +
+      labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
+      facet_grid(as.formula(paste("~", var_groups)))+
+      theme_classic()
 
-  print(rSSR_plot)
-  print(Log_rSSR_plot, vp = vp)
-} else {
-  rSSR_plot <- ggplot(rSSR_df) +
-    geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
-              color = "blue") +
-    geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
-               size = .5, color = "red") +
-    geom_hline(data = opt_mbp_df,
-               aes(yintercept = threshold, color = factor(thresh_level)),
-               linetype = "dashed") +
-    geom_vline(data = opt_mbp_df,
-               aes(xintercept = opt_mbp/60, color = factor(thresh_level)),
-               linetype = "dashed")+
-    geom_line(aes(x = mbp_n / 60,
-                  y = zoo::rollmean(rSSR,7, na.pad = TRUE),
-                  group = 1),
-              color = "grey50") +
-    scale_color_discrete(name = "Significance Level")+
-    scale_x_continuous(expand = c(0, 0)) +
-    labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
-    facet_grid(as.formula(paste("~", var_groups)))+
-    theme_classic()
+    log_plot <- ggplot(rSSR_df) +
+      geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                color = "blue") +
+      geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                 size = .5, color = "red") +
+      geom_hline(data = opt_mbp_df,
+                 aes(yintercept = threshold, color = factor(thresh_level)),
+                 linetype = "dashed") +
+      geom_vline(data = opt_mbp_df,
+                 aes(xintercept = opt_mbp/60, color = factor(thresh_level)),
+                 linetype = "dashed")+
+      geom_smooth(aes(x = mbp_n / 60, y = rSSR, group = 1),
+                  method = "loess",
+                  span = 0.7,
+                  color = "grey50",
+                  se = FALSE)+
+      scale_x_continuous(expand = c(0, 0)) +
+      scale_color_discrete(name = "Significance Level")+
+      scale_y_log10() +
+      labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
+      facet_grid(as.formula(paste("~", var_groups)))+
+      theme_classic()+
+      theme(legend.position = "none",
+            strip.background = element_blank(),
+            strip.text = element_blank())
 
-  Log_rSSR_plot <- ggplot(rSSR_df) +
-    geom_line(aes(x = mbp_n / 60, y = rSSR, group = 1),
-              color = "blue") +
-    geom_point(aes(x = mbp_n / 60, y = rSSR, group = 1),
-               size = .5, color = "red") +
-    geom_hline(data = opt_mbp_df,
-               aes(yintercept = threshold, color = factor(thresh_level)),
-               linetype = "dashed") +
-    geom_vline(data = opt_mbp_df,
-               aes(xintercept = opt_mbp/60, color = factor(thresh_level)),
-               linetype = "dashed")+
-    geom_smooth(aes(x = mbp_n / 60, y = rSSR, group = 1),
-                method = "loess",
-                span = 0.7,
-                color = "grey50",
-                se = FALSE)+
-    scale_x_continuous(expand = c(0, 0)) +
-    scale_y_log10() +
-    labs(x = "MBP (minutes)", y = "renormalized Sum of Squared Residuals") +
-    facet_grid(as.formula(paste("~", var_groups)))+
-    theme_classic()
+    vp1 <- grid::viewport(width = 11, height = 6,
+                          x = 5.5, y = 3, default.units = "inches")
+    vp2 <- grid::viewport(width = 4, height = 3,
+                          x = 7, y = 4, default.units = "inches")
 
-  vp <- grid::viewport(width = unit(4,"inches"), height = unit(3,"inches"),
-                       x = unit(4.5,"inches"), y = unit(2.75, "inches"))
-
-  print(rSSR_plot)
-  print(Log_rSSR_plot, vp = vp)
+    dev.new()
+    print(main_plot, vp = vp1)
+    print(log_plot, vp = vp2)
+  }
 }
-}
+#' @examples
+#'
+#' #plot the rSSR and log(rSSR) curves
+#' rssr_plot(rSSR_df = ex_rSSR,
+#'           opt_mbp_df = ex_opt,
+#'           var_groups = "fish_type")
+#'

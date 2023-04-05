@@ -34,3 +34,10 @@ conv_thresholds <- function(rSSR_df, var_groups, thresh_levels = c(0.05,0.01,0.0
 
   return(thresh_list)
 }
+#' @examples
+#'
+#' # Calculate the 95% "convergence" threshold for the rSSR data
+#' conv_thresholds(rSSR_df = ex_rSSR,
+#'                 var_groups = "fish_type",
+#'                 thresh_levels = 0.05)
+#'

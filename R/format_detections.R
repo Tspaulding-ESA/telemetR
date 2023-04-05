@@ -66,8 +66,8 @@ format_detects <- function(data, var_Id, var_datetime_local, var_frequency = NUL
 }
 #' @examples
 #'
-#' # Rename columns to work with functions
-#' format_detects(data = filtered_detections,
+#' #format the detection data
+#' format_detects(data = raw_detections,
 #'                var_Id = "tag_id",
 #'                var_datetime_local = "local_time",
 #'                var_receiver_serial = "serial",

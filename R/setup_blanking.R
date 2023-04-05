@@ -36,3 +36,15 @@ setup_blanking <- function(data, var_site,var_Id,var_datetime,var_groups = NULL,
                                                                var_datetime))))
   return(cross)
 }
+#' @examples
+#'
+#' # reduce dataframe for optimal blanking period analysis
+#'
+#' setup_blanking(data = filtered_detections,
+#'                var_Id = "Tag_Code",
+#'                var_site = "receiver_general_location",
+#'                var_datetime = "DateTime_Local",
+#'                var_groups = "fish_type",
+#'                var_ping_rate = "tag_pulse_rate_interval_nominal",
+#'                n_val = seq(1,1000,5))
+#'

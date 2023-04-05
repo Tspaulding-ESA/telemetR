@@ -7,8 +7,8 @@
 #' 16.6x the stated pulse rate interval. Called by `second_filter()`.
 #'
 #' @param org_file a dataframe of detections retrieved from `add_org()`
-#' @param time_unit The unit of time used for analyses (seconds, minutes, hours,
-#' days, weeks, months)
+#' @param time_unit The unit of time used for analyses (secs, mins, hours,
+#' days, weeks)
 #' @param multipath_time A numeric maximum amount of time which must pass
 #' between detections for a detection to be considered a "true", not a bounced,
 #' signal.
@@ -17,19 +17,19 @@
 #' @return A dataframe which has been filtered to remove false positives
 #' @import dplyr
 #' @export
-filter_2h <- function(org_file, time_unit, multipath_time, org_ping_rate){
+filter_4h <- function(org_file, time_unit, multipath_time, org_ping_rate){
   filtered <- org_file
   filtered <- dplyr::group_by(.data = filtered, Tag_Code)
   filtered <- dplyr::arrange(.data = filtered, Tag_Code, DateTime_Local)
   filtered$td = difftime(filtered$DateTime_Local,
                          dplyr::lag(filtered$DateTime_Local), #compare the time difference between each hit
                          units = time_unit)
+  filtered$td = difftime(filtered$DateTime_Local,
+                         dplyr::lag(filtered$DateTime_Local), #compare the time difference between each hit
+                         units = time_unit)
   det_count <- dplyr::summarise(filtered, det_count = dplyr::n())
   filtered <- dplyr::left_join(filtered, det_count, by = "Tag_Code")
-  filtered$multipath = ifelse(filtered$time_diff_lag >
-                            lubridate::period( x = multipath_time,
-                                               units = time_unit)|
-                            filtered$Tag_Code != dplyr::lag(filtered$Tag_Code), FALSE, TRUE)
+  filtered$multipath <- ifelse(filtered$td > multipath_time | is.na(filtered$td), FALSE, TRUE) #identify any remaining multipath
   filtered$multipath <- ifelse(filtered$multipath == TRUE &
                                  dplyr::lead(filtered$multipath == FALSE),
                                FALSE,
@@ -53,3 +53,10 @@ filter_2h <- function(org_file, time_unit, multipath_time, org_ping_rate){
   filtered <- dplyr::left_join(filtered, det_count, by = "Tag_Code")
   filtered
 }
+#' @examples
+#'
+#' # Apply a 4hit filter to data previously prefiltered and with organism data
+#' filter_4h(org_file = dat_orgfilt,
+#'           time_unit = "secs",
+#'           multipath_time = 0.3,
+#'           org_ping_rate = 3)

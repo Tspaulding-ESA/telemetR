@@ -80,3 +80,16 @@ blanking_event <- function(data,var_site,var_Id,var_datetime,var_groups = NULL,
 
   return(event_dur)
 }
+#' @examples
+#'
+#' # Create a dataframe of events blanked by a set of n_values from 1:500
+#'
+#' blanking_event(data = filtered_detections,
+#'                var_Id = "Tag_Code",
+#'                var_site = "receiver_general_location",
+#'                var_datetime = "DateTime_Local",
+#'                var_groups = "fish_type",
+#'                var_ping_rate = "tag_pulse_rate_interval_nominal",
+#'                n_val = seq(1,500,5),
+#'                time_unit = "secs")
+#'

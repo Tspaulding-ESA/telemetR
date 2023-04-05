@@ -25,15 +25,16 @@ residence_plot <- function(time_df, var_groups = NULL, time_unit){
     max()
 
   if(is.null(var_groups)){
-    ggplot(time_df |> dplyr::filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
+    plot <- ggplot(time_df |> dplyr::filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
       geom_line() +
       scale_y_log10() +
       labs(x = paste("Time (",time_unit,")"), y = "Proportion of Event Lengths > Time")+
       coord_cartesian(ylim= c(0.0001, 1))+
       theme_classic()+
       theme(legend.position = "none")
-  }else{
-    ggplot(time_df |> dplyr::filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
+  }
+  if(!is.null(var_groups)){
+    plot <- ggplot(time_df |> dplyr::filter(t < max_t), aes(x = t, y = prop_res, col = as.factor(mbp_n))) +
       geom_line() +
       scale_y_log10() +
       labs(x = paste("Time (",time_unit,")"), y = "Proportion of Event Lengths > Time")+
@@ -42,4 +43,15 @@ residence_plot <- function(time_df, var_groups = NULL, time_unit){
       theme_classic()+
       theme(legend.position = "none")
   }
+  print(plot)
 }
+#' @examples
+#'
+#' #Plot a comparison of the number of events longer than a given time `t`
+#' residence_plot(time_df = time_test,
+#'                var_groups = "fish_type",
+#'                time_unit = "secs")
+#' # Note: that the large number of lines extending past the largest Time
+#' # indicates that a larger t is needed to ensure convergence
+#'
+#'
