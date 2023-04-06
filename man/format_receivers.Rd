@@ -46,3 +46,13 @@ This function takes a dataframe of receiver metadata and reformats specific
 columns so that they can be read by the filtering functions in filteRjsats
 package
 }
+\examples{
+# Rename columns to work with functions
+format_receivers(data = receivers,
+                 var_receiver_serial = "receiver_serial_number",
+                 var_receiver_make = "receiver_make",
+                 var_receiver_deploy = "receiver_start",
+                 var_receiver_retrieve = "receiver_end",
+                 local_time_zone = "America/Los_Angeles",
+                 time_format = "\%m-\%d-\%Y \%H:\%M:\%S")
+}

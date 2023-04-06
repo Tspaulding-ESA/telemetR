@@ -25,3 +25,11 @@ Takes a dataframe of the proportion of events created by each potential
 blanking period which "survived" a certain time (t) and creates a plot.
 Used to visually look for convergences between survival lines.
 }
+\examples{
+#Plot a comparison of the number of events longer than a given time `t`
+residence_plot(time_df = time_test,
+               var_groups = "fish_type",
+               time_unit = "secs")
+# Note: that the large number of lines extending past the largest Time
+# indicates that a larger t is needed to ensure convergence
+}

@@ -50,3 +50,15 @@ The residence events are created by collecting detections which occur within
 the selected optimum maximum blanking period from the next detection. This
 function can be very slow depending on the size of the dataframe.
 }
+\examples{
+# Build a set of detection events after determining the optimal blanking
+# period (e.g. 2500 seconds)
+build_residence(data = filtered_detections,
+                var_groups = "fish_type",
+                var_Id = "Tag_Code",
+                var_datetime = "DateTime_Local",
+                var_site = "receiver_general_location",
+                opt_mbp = 2500,
+                time_unit = "secs")
+
+}

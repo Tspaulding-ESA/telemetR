@@ -29,3 +29,10 @@ detections, and then check the remaining detections by comparing the time
 between detections, for a rolling window of 4 detections to ensure it is less
 16.6x the stated pulse rate interval. Called by `second_filter()`.
 }
+\examples{
+# Apply a 4hit filter to data previously prefiltered and with organism data
+filter_4h(org_file = dat_orgfilt,
+          time_unit = "secs",
+          multipath_time = 0.3,
+          org_ping_rate = 3)
+}

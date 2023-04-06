@@ -30,3 +30,10 @@ We consider convergence. Since the rSSR curve generally bounces around an
 assymptote and often does not reach or stay at 0, we set a threshold a priori
  for identifying convergence.
 }
+\examples{
+# Calculate the 95\% "convergence" threshold for the rSSR data
+conv_thresholds(rSSR_df = ex_rSSR,
+                var_groups = "fish_type",
+                thresh_levels = 0.05)
+
+}

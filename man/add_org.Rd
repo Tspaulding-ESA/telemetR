@@ -29,3 +29,19 @@ Detections are then filtered further based on the date and time of tag
 release and expected battery life. Detections occurring before release of the
 tag or after 2x the expected battery life are removed.
 }
+\examples{
+# Format the organism data
+formatted_fish <- format_org(data = fish,
+                             var_Id = "TagCode",
+                             var_release = "Release_Date",
+                             var_tag_life = "TagLife",
+                             var_ping_rate = "PRI",
+                             local_time_zone = "America/Los_Angeles",
+                             time_format = "\%Y-\%m-\%d \%H:\%M:\%S")
+
+# Add organism data to the prefiltered detection data
+add_org(prefilter_file = dat_filt1,
+        org = formatted_fish,
+        time_before_detection = 120,
+        time_unit = "days")
+}

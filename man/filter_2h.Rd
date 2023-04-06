@@ -29,3 +29,10 @@ multipath detections, and then check the remaining detections by comparing
 the time between each detection to ensure it is less 4x the stated pulse rate
 interval. Called by second_filter_2h4h().
 }
+\examples{
+# Apply a 2-hit filter to data previously prefiltered and with organism data
+filter_2h(org_file = dat_orgfilt,
+          time_unit = "secs",
+          multipath_time = 0.3,
+          org_ping_rate = 3)
+}

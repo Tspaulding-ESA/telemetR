@@ -51,3 +51,12 @@ This function takes a detection dataframe from a single receiver and
 reformats specific columns so that they can be read by the filtering
 functions in filteRjsats package
 }
+\examples{
+#format the detection data
+format_detects(data = raw_detections,
+               var_Id = "tag_id",
+               var_datetime_local = "local_time",
+               var_receiver_serial = "serial",
+               local_time_zone = "America/Los_Angeles",
+               time_format = "\%Y-\%m-\%d \%H:\%M:\%S")
+}

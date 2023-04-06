@@ -23,3 +23,8 @@ Takes dataframes created by `renorm_SSR()` and `conv_thresholds()` and
 determines the corresponding "optimum" maximum blanking period (MBP) for each
 convergence threshold.
 }
+\examples{
+# Determine the optimum mbp
+opt_mbp(rSSR_df = ex_rSSR,
+        thresh_values = conv_thresh)
+}

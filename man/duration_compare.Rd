@@ -30,3 +30,9 @@ than the duration it is flagged as "survived". The proportion of events which
 "survive" for each potential blanking period at each time (t) is then
 calculated.
 }
+\examples{
+# Compare the durations of blanked detection events
+duration_compare(event_dur = blanked_detects,
+                 var_groups = "fish_type",
+                 time_seq = seq(0,10000,3))
+}

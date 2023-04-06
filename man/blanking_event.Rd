@@ -61,3 +61,14 @@ collecting detections which occur within n_val*ping_rate from the next
 detection. This function can be very slow depending on the size of the
 dataframe.
 }
+\examples{
+# Create a dataframe of events blanked by a set of n_values from 1:10
+blanking_event(data = filtered_detections,
+               var_Id = "Tag_Code",
+               var_site = "receiver_general_location",
+               var_datetime = "DateTime_Local",
+               var_groups = "fish_type",
+               var_ping_rate = "tag_pulse_rate_interval_nominal",
+               n_val = c(1:10),
+               time_unit = "secs")
+}

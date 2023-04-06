@@ -50,3 +50,13 @@ Blanking Period multipliers (n_val) and crosses them, duplicating the entire
 dataframe by the length of n_val. This function is contained in blanking
 event.This function can be slow depending on the size of the dataframe.
 }
+\examples{
+# reduce dataframe for optimal blanking period analysis
+setup_blanking(data = filtered_detections,
+               var_Id = "Tag_Code",
+               var_site = "receiver_general_location",
+               var_datetime = "DateTime_Local",
+               var_groups = "fish_type",
+               var_ping_rate = "tag_pulse_rate_interval_nominal",
+               n_val = c(1:10))
+}

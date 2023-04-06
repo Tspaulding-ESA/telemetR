@@ -25,3 +25,9 @@ Using the dataframes produced by renorm_SSR and opt_mbp, plots the rSSR
 curve, and all the convergence thresholds (horizontal lines) and
 corresponding optimum mbps (vertical lines).
 }
+\examples{
+#plot the rSSR and log(rSSR) curves
+rssr_plot(rSSR_df = ex_rSSR,
+          opt_mbp_df = ex_opt,
+          var_groups = "fish_type")
+}

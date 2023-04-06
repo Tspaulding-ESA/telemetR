@@ -46,3 +46,22 @@ for beacons). Following this, the dataframe is standardized so
 that all detection dataframes from any technology type are identical and
 superfluous fields are removed.
 }
+\examples{
+# Run the prefilter on a set of raw detection data
+
+#format the detection data
+detects_formatted <- format_detects(data = raw_detections,
+                                    var_Id = "tag_id",
+                                    var_datetime_local = "local_time",
+                                    var_receiver_serial = "serial",
+                                    local_time_zone = "America/Los_Angeles",
+                                    time_format = "\%Y-\%m-\%d \%H:\%M:\%S")
+
+#apply the prefilter
+prefilter(data = detects_formatted,
+          reference_tags = reftags,
+          time_unit = "secs",
+          multipath_time = 0.3,
+          org_ping_rate = 3,
+          beacon_ping = 30)
+}
