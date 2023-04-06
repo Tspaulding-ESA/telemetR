@@ -13,10 +13,25 @@
 #' released and still detected? Generally 2x the expected tag life.
 #' @param time_unit The unit of time used for time_before_detection
 #' (seconds, minutes, hours, days, weeks, months)
-#' @return A filtered dataframe converting the raw detection data into rows
+#' @returns A filtered dataframe converting the raw detection data into rows
 #' of detections
 #' @import dplyr
 #' @export
+#' @examples
+#' # Format the organism data
+#' formatted_fish <- format_org(data = fish,
+#'                              var_Id = "TagCode",
+#'                              var_release = "Release_Date",
+#'                              var_tag_life = "TagLife",
+#'                              var_ping_rate = "PRI",
+#'                              local_time_zone = "America/Los_Angeles",
+#'                              time_format = "%Y-%m-%d %H:%M:%S")
+#'
+#' # Add organism data to the prefiltered detection data
+#' add_org(prefilter_file = dat_filt1,
+#'         org = formatted_fish,
+#'         time_before_detection = 120,
+#'         time_unit = "days")
 add_org <- function(prefilter_file, org, time_before_detection, time_unit){
   org_tmp <- org[org$org_release_date >
                    (min(prefilter_file$DateTime_Local)-
@@ -43,19 +58,3 @@ add_org <- function(prefilter_file, org, time_before_detection, time_unit){
 
   org_file
 }
-#' @examples
-#'
-#' # Format the organism data
-#' formatted_fish <- format_org(data = fish,
-#'                              var_Id = "TagCode",
-#'                              var_release = "Release_Date",
-#'                              var_tag_life = "TagLife",
-#'                              var_ping_rate = "PRI",
-#'                              local_time_zone = "America/Los_Angeles",
-#'                              time_format = "%Y-%m-%d %H:%M:%S")
-#'
-#' # Add organism data to the prefiltered detection data
-#' add_org(prefilter_file = dat_filt1,
-#'         org = formatted_fish,
-#'         time_before_detection = 120,
-#'         time_unit = "days")

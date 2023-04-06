@@ -15,10 +15,15 @@
 #' largest value of the sequence should be greater that the longest duration
 #' produced using blanking event, and the smallest should be shorter than the
 #' smallest blanking period.
-#' @return A dataframe which contains the proportion of "survived" events
+#' @returns A dataframe which contains the proportion of "survived" events
 #' created by each potential blanking period for each time (t).
 #' @import dplyr
 #' @export
+#' @examples
+#' # Compare the durations of blanked detection events
+#' duration_compare(event_dur = blanked_detects,
+#'                  var_groups = "fish_type",
+#'                  time_seq = seq(0,10000,3))
 duration_compare <- function(event_dur, var_groups=NULL, time_seq){
   time_list <- list()
 
@@ -34,10 +39,3 @@ duration_compare <- function(event_dur, var_groups=NULL, time_seq){
     dplyr::mutate(t = as.numeric(t))
   return(time_df)
 }
-#' @examples
-#'
-#' # Compare the durations of blanked detection events
-#' duration_compare(event_dur = blanked_detects,
-#'                  var_groups = "fish_type",
-#'                  time_seq = seq(0,10000,3))
-#'

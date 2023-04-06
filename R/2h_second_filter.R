@@ -15,8 +15,14 @@
 #' signal.
 #' @param org_ping_rate The expected time between transmissions emitted from
 #' tags/transmitters implanted or attached to an organism
-#' @return A dataframe which has been filtered to remove false positives
+#' @returns A dataframe which has been filtered to remove false positives
 #' @export
+#' @examples
+#' # Apply a 2-hit filter to data previously prefiltered and with organism data
+#' filter_2h(org_file = dat_orgfilt,
+#'           time_unit = "secs",
+#'           multipath_time = 0.3,
+#'           org_ping_rate = 3)
 filter_2h <- function(org_file, time_unit, multipath_time,
                       org_ping_rate){
   filtered <- org_file
@@ -60,10 +66,3 @@ filter_2h <- function(org_file, time_unit, multipath_time,
 
   filtered
 }
-#' @examples
-#'
-#' # Apply a 2-hit filter to data previously prefiltered and with organism data
-#' filter_2h(org_file = dat_orgfilt,
-#'           time_unit = "secs",
-#'           multipath_time = 0.3,
-#'           org_ping_rate = 3)

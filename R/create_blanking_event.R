@@ -31,11 +31,21 @@
 #' should correspond to the ping_rate, (i.e. if the ping rate is 3 seconds, the
 #' preferred time_unit is seconds). If the preferred time_unit is on the same
 #' scale as the ping_rate, the ping rate should be converted to the same scale.
-#' @return A dataframe which has been crossed with all integers in n_val, and
+#' @returns A dataframe which has been crossed with all integers in n_val, and
 #' which has been condensed into events. Please refer to Capello et. al. 2015
 #' for further detail about the creation of these events.
 #' @import dplyr
 #' @export
+#' @examples
+#' # Create a dataframe of events blanked by a set of n_values from 1:10
+#' blanking_event(data = filtered_detections,
+#'                var_Id = "Tag_Code",
+#'                var_site = "receiver_general_location",
+#'                var_datetime = "DateTime_Local",
+#'                var_groups = "fish_type",
+#'                var_ping_rate = "tag_pulse_rate_interval_nominal",
+#'                n_val = c(1:10),
+#'                time_unit = "secs")
 blanking_event <- function(data,var_site,var_Id,var_datetime,var_groups = NULL,
                            var_ping_rate, n_val, time_unit){
   setup <- setup_blanking(data,
@@ -80,16 +90,3 @@ blanking_event <- function(data,var_site,var_Id,var_datetime,var_groups = NULL,
 
   return(event_dur)
 }
-#' @examples
-#'
-#' # Create a dataframe of events blanked by a set of n_values from 1:500
-#'
-#' blanking_event(data = filtered_detections,
-#'                var_Id = "Tag_Code",
-#'                var_site = "receiver_general_location",
-#'                var_datetime = "DateTime_Local",
-#'                var_groups = "fish_type",
-#'                var_ping_rate = "tag_pulse_rate_interval_nominal",
-#'                n_val = seq(1,500,5),
-#'                time_unit = "secs")
-#'

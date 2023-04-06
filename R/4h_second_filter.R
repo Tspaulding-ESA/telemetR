@@ -14,9 +14,15 @@
 #' signal.
 #' @param org_ping_rate The expected time between transmissions emitted from
 #' tags/transmitters implanted or attached to an organism
-#' @return A dataframe which has been filtered to remove false positives
+#' @returns A dataframe which has been filtered to remove false positives
 #' @import dplyr
 #' @export
+#' @examples
+#' # Apply a 4hit filter to data previously prefiltered and with organism data
+#' filter_4h(org_file = dat_orgfilt,
+#'           time_unit = "secs",
+#'           multipath_time = 0.3,
+#'           org_ping_rate = 3)
 filter_4h <- function(org_file, time_unit, multipath_time, org_ping_rate){
   filtered <- org_file
   filtered <- dplyr::group_by(.data = filtered, Tag_Code)
@@ -53,10 +59,3 @@ filter_4h <- function(org_file, time_unit, multipath_time, org_ping_rate){
   filtered <- dplyr::left_join(filtered, det_count, by = "Tag_Code")
   filtered
 }
-#' @examples
-#'
-#' # Apply a 4hit filter to data previously prefiltered and with organism data
-#' filter_4h(org_file = dat_orgfilt,
-#'           time_unit = "secs",
-#'           multipath_time = 0.3,
-#'           org_ping_rate = 3)

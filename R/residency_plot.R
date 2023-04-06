@@ -10,11 +10,18 @@
 #' @param var_groups a single string or vector of strings of the columns which
 #' should be used to group organisms. Common groupings are species and cohorts.
 #' @param time_unit the unit of time used to calculate durations
-#' @return A plot of the proportion of events created by each potential
+#' @returns A plot of the proportion of events created by each potential
 #' blanking period at each time (t).
 #' @import dplyr
 #' @import ggplot2
 #' @export
+#' @examples
+#' #Plot a comparison of the number of events longer than a given time `t`
+#' residence_plot(time_df = time_test,
+#'                var_groups = "fish_type",
+#'                time_unit = "secs")
+#' # Note: that the large number of lines extending past the largest Time
+#' # indicates that a larger t is needed to ensure convergence
 residence_plot <- function(time_df, var_groups = NULL, time_unit){
   max_t <- time_df |>
     dplyr::group_by(t) |>
@@ -45,13 +52,3 @@ residence_plot <- function(time_df, var_groups = NULL, time_unit){
   }
   print(plot)
 }
-#' @examples
-#'
-#' #Plot a comparison of the number of events longer than a given time `t`
-#' residence_plot(time_df = time_test,
-#'                var_groups = "fish_type",
-#'                time_unit = "secs")
-#' # Note: that the large number of lines extending past the largest Time
-#' # indicates that a larger t is needed to ensure convergence
-#'
-#'

@@ -19,10 +19,19 @@
 #' names (e.g. "America/Los_Angeles" for Pacific Time)
 #' @param time_format a string value indicating the datetime format of all time
 #' fields
-#' @return A dataframe which contains fields renamed to match those required by
+#' @returns A dataframe which contains fields renamed to match those required by
 #' add_receivers() function
 #' @import dplyr
 #' @export
+#' @examples
+#' # Rename columns to work with functions
+#' format_receivers(data = receivers,
+#'                  var_receiver_serial = "receiver_serial_number",
+#'                  var_receiver_make = "receiver_make",
+#'                  var_receiver_deploy = "receiver_start",
+#'                  var_receiver_retrieve = "receiver_end",
+#'                  local_time_zone = "America/Los_Angeles",
+#'                  time_format = "%m-%d-%Y %H:%M:%S")
 format_receivers <- function(data, var_receiver_serial, var_receiver_make,
                          var_receiver_deploy, var_receiver_retrieve,
                          local_time_zone, time_format){
@@ -45,14 +54,3 @@ format_receivers <- function(data, var_receiver_serial, var_receiver_make,
                                         orders = c(time_format)))
   return(df)
 }
-#' @examples
-#'
-#' # Rename columns to work with functions
-#' format_receivers(data = receivers,
-#'                  var_receiver_serial = "receiver_serial_number",
-#'                  var_receiver_make = "receiver_make",
-#'                  var_receiver_deploy = "receiver_start",
-#'                  var_receiver_retrieve = "receiver_end",
-#'                  local_time_zone = "America/Los_Angeles",
-#'                  time_format = "%m-%d-%Y %H:%M:%S")
-#'

@@ -11,10 +11,15 @@
 #' convergence thresholds and optimum mbps
 #' @param var_groups a single string or vector of strings of the columns which
 #' should be used to group organisms. Common groupings are species and cohorts.
-#' @return A plot of the rSSR curve, convergence thresholds, and optimum mbps
+#' @returns A plot of the rSSR curve, convergence thresholds, and optimum mbps
 #' @import dplyr
 #' @import ggplot2
 #' @export
+#' @examples
+#' #plot the rSSR and log(rSSR) curves
+#' rssr_plot(rSSR_df = ex_rSSR,
+#'           opt_mbp_df = ex_opt,
+#'           var_groups = "fish_type")
 rSSR_plot <- function(rSSR_df, opt_mbp_df, var_groups=NULL){
   if(is.null(var_groups)){
     main_plot <- ggplot(rSSR_df) +
@@ -116,10 +121,3 @@ rSSR_plot <- function(rSSR_df, opt_mbp_df, var_groups=NULL){
   print(main_plot)
   print(log_plot)
 }
-#' @examples
-#'
-#' #plot the rSSR and log(rSSR) curves
-#' rssr_plot(rSSR_df = ex_rSSR,
-#'           opt_mbp_df = ex_opt,
-#'           var_groups = "fish_type")
-#'

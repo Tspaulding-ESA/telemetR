@@ -22,9 +22,27 @@
 #' @param beacon_ping The expected time between transmissions emitted from
 #' tags/transmitters used as beacon or reference tags to check receiver
 #' functionality.
-#' @return A standardized detection dataframe with multipath detects removed
+#' @returns A standardized detection dataframe with multipath detects removed
 #' @import dplyr
 #' @export
+#' @examples
+#' # Run the prefilter on a set of raw detection data
+#'
+#' #format the detection data
+#' detects_formatted <- format_detects(data = raw_detections,
+#'                                     var_Id = "tag_id",
+#'                                     var_datetime_local = "local_time",
+#'                                     var_receiver_serial = "serial",
+#'                                     local_time_zone = "America/Los_Angeles",
+#'                                     time_format = "%Y-%m-%d %H:%M:%S")
+#'
+#' #apply the prefilter
+#' prefilter(data = detects_formatted,
+#'           reference_tags = reftags,
+#'           time_unit = "secs",
+#'           multipath_time = 0.3,
+#'           org_ping_rate = 3,
+#'           beacon_ping = 30)
 prefilter <- function(data, reference_tags, time_unit, multipath_time,
                       org_ping_rate, beacon_ping){
   temp <- data
@@ -107,22 +125,3 @@ prefilter <- function(data, reference_tags, time_unit, multipath_time,
   prefilter_file <- temp
   prefilter_file
 }
-#' @examples
-#'
-#' Run the prefilter on a set of raw detection data
-#'
-#' #format the detection data
-#' detects_formatted <- format_detects(data = raw_detections,
-#'                                     var_Id = "tag_id",
-#'                                     var_datetime_local = "local_time",
-#'                                     var_receiver_serial = "serial",
-#'                                     local_time_zone = "America/Los_Angeles",
-#'                                     time_format = "%Y-%m-%d %H:%M:%S")
-#' #apply the prefilter
-#' prefilter(data = detects_formatted,
-#'           reference_tags = reftags,
-#'           time_unit = "secs",
-#'           multipath_time = 0.3,
-#'           org_ping_rate = 3,
-#'           beacon_ping = 30)
-#'

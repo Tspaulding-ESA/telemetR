@@ -9,20 +9,17 @@
 #' potential blanking period and the next.
 #' @param thresh_values a dataframe created by conv_thresholds corresponding to
 #' the chosen convergence thresholds.
-#' @return A dataframe showing the convergence value and corresponding optimal
+#' @returns A dataframe showing the convergence value and corresponding optimal
 #' maximum blanking period for each grouping.
 #' @import dplyr
 #' @export
+#' @examples
+#' # Determine the optimum mbp
+#' opt_mbp(rSSR_df = ex_rSSR,
+#'         thresh_values = conv_thresh)
 opt_mbp <- function(rSSR_df, thresh_values){
   tmp <- thresh_values
   tmp <- tmp |>
     dplyr::mutate(opt_mbp = rSSR_df$mbp_n[max(which(rSSR_df$rSSR > threshold))+1])
   return(tmp)
 }
-#' @examples
-#'
-#' # Determine the optimum mbp
-#'
-#' opt_mbp(rSSR_df = ex_rSSR,
-#'         thresh_values = conv_thresh)
-#'

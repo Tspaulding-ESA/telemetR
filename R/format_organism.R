@@ -16,10 +16,20 @@
 #' names (e.g. "America/Los_Angeles" for Pacific Time)
 #' @param time_format a string value indicating the datetime format of all time
 #' fields
-#' @return A dataframe which contains fields renamed to match those required by
+#' @returns A dataframe which contains fields renamed to match those required by
 #' add_org() function
 #' @import dplyr
 #' @export
+#' @examples
+#' # Rename columns to work with functions
+#' format_org(data = fish,
+#'             var_Id = "TagCode",
+#'             var_release = "Release_Date",
+#'             var_tag_life = "TagLife",
+#'             var_ping_rate = "PRI",
+#'             local_time_zone = "America/Los_Angeles",
+#'             time_format = "%Y-%m-%d %H:%M:%S")
+#'
 format_org <- function(data, var_Id, var_release, var_tag_life, var_ping_rate,
                         local_time_zone, time_format){
   df <- data
@@ -40,14 +50,3 @@ format_org <- function(data, var_Id, var_release, var_tag_life, var_ping_rate,
              as.numeric(tag_pulse_rate_interval_nominal))
   return(df)
 }
-#' @examples
-#'
-#' # Rename columns to work with functions
-#' format_org(data = fish,
-#'             var_Id = "TagCode",
-#'             var_release = "Release_Date",
-#'             var_tag_life = "TagLife",
-#'             var_ping_rate = "PRI",
-#'             local_time_zone = "America/Los_Angeles",
-#'             time_format = "%Y-%m-%d %H:%M:%S")
-#'

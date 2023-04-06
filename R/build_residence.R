@@ -23,10 +23,21 @@
 #' period, often on the same scale as the ping rate for the transmitter.
 #' @param opt_mbp a single optimum blanking period chosen from the output of
 #' opt_mbp()
-#' @return A dataframe of detections which has been condensed into continuous
+#' @returns A dataframe of detections which has been condensed into continuous
 #' residence events based on the optimum maximum blanking period selected.
 #' @import dplyr
 #' @export
+#' @examples
+#' # Build a set of detection events after determining the optimal blanking
+#' # period (e.g. 2500 seconds)
+#' build_residence(data = filtered_detections,
+#'                 var_groups = "fish_type",
+#'                 var_Id = "Tag_Code",
+#'                 var_datetime = "DateTime_Local",
+#'                 var_site = "receiver_general_location",
+#'                 opt_mbp = 2500,
+#'                 time_unit = "secs")
+#'
 build_residence <- function(data, var_groups, var_Id, var_datetime, var_site,
                             opt_mbp, time_unit){
   residence <- data |>
@@ -67,15 +78,3 @@ build_residence <- function(data, var_groups, var_Id, var_datetime, var_site,
 
   return(residence)
 }
-#' @examples
-#'
-#' # Build a set of detection events after determining the optimal blanking
-#' # period (e.g. 2500 seconds)
-#' build_residence(data = filtered_detections,
-#'                 var_groups = "fish_type",
-#'                 var_Id = "Tag_Code",
-#'                 var_datetime = "DateTime_Local",
-#'                 var_site = "receiver_general_location",
-#'                 opt_mbp = 2500,
-#'                 time_unit = "secs")
-#'

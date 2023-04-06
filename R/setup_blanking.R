@@ -24,9 +24,18 @@
 #' step values for n should be selected based on prior knowledge about general
 #' behavior habits of the study organism and the functionality of the equipment.
 #' For more information, please refer to Capello et. al. 2015.
-#' @return A dataframe which has been crossed with all integers in n_val
+#' @returns A dataframe which has been crossed with all integers in n_val
 #' @import dplyr
 #' @export
+#' @examples
+#' # reduce dataframe for optimal blanking period analysis
+#' setup_blanking(data = filtered_detections,
+#'                var_Id = "Tag_Code",
+#'                var_site = "receiver_general_location",
+#'                var_datetime = "DateTime_Local",
+#'                var_groups = "fish_type",
+#'                var_ping_rate = "tag_pulse_rate_interval_nominal",
+#'                n_val = c(1:10))
 setup_blanking <- function(data, var_site,var_Id,var_datetime,var_groups = NULL,
                            var_ping_rate, n_val){
   df <- data[,c(var_groups,var_site,var_Id,var_datetime,var_ping_rate)]
@@ -36,15 +45,3 @@ setup_blanking <- function(data, var_site,var_Id,var_datetime,var_groups = NULL,
                                                                var_datetime))))
   return(cross)
 }
-#' @examples
-#'
-#' # reduce dataframe for optimal blanking period analysis
-#'
-#' setup_blanking(data = filtered_detections,
-#'                var_Id = "Tag_Code",
-#'                var_site = "receiver_general_location",
-#'                var_datetime = "DateTime_Local",
-#'                var_groups = "fish_type",
-#'                var_ping_rate = "tag_pulse_rate_interval_nominal",
-#'                n_val = seq(1,1000,5))
-#'

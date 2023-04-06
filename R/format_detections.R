@@ -23,9 +23,17 @@
 #' names (e.g. "America/Los_Angeles" for Pacific Time)
 #' @param time_format a string value indicating the datetime format of all time
 #' fields
-#' @return A standardized detection dataframe which can be read by filteRjsats
+#' @returns A standardized detection dataframe which can be read by filteRjsats
 #' @import dplyr
 #' @export
+#' @examples
+#' #format the detection data
+#' format_detects(data = raw_detections,
+#'                var_Id = "tag_id",
+#'                var_datetime_local = "local_time",
+#'                var_receiver_serial = "serial",
+#'                local_time_zone = "America/Los_Angeles",
+#'                time_format = "%Y-%m-%d %H:%M:%S")
 format_detects <- function(data, var_Id, var_datetime_local, var_frequency = NULL,
                            var_receiver_serial, var_receiver_make = NULL,
                            local_time_zone, time_format){
@@ -64,13 +72,3 @@ format_detects <- function(data, var_Id, var_datetime_local, var_frequency = NUL
                                 "Receiver Make & frequency must be supplied, else leave NULL",
                                 "Please refer to documentation")))}
 }
-#' @examples
-#'
-#' #format the detection data
-#' format_detects(data = raw_detections,
-#'                var_Id = "tag_id",
-#'                var_datetime_local = "local_time",
-#'                var_receiver_serial = "serial",
-#'                local_time_zone = "America/Los_Angeles",
-#'                time_format = "%Y-%m-%d %H:%M:%S")
-#'
