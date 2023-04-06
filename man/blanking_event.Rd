@@ -69,6 +69,6 @@ blanking_event(data = filtered_detections,
                var_datetime = "DateTime_Local",
                var_groups = "fish_type",
                var_ping_rate = "tag_pulse_rate_interval_nominal",
-               n_val = c(1:10),
+               n_val = c(1:2),
                time_unit = "secs")
 }

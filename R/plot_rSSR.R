@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' #plot the rSSR and log(rSSR) curves
-#' rssr_plot(rSSR_df = ex_rSSR,
+#' rSSR_plot(rSSR_df = ex_rSSR,
 #'           opt_mbp_df = ex_opt,
 #'           var_groups = "fish_type")
 rSSR_plot <- function(rSSR_df, opt_mbp_df, var_groups=NULL){

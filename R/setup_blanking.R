@@ -35,7 +35,7 @@
 #'                var_datetime = "DateTime_Local",
 #'                var_groups = "fish_type",
 #'                var_ping_rate = "tag_pulse_rate_interval_nominal",
-#'                n_val = c(1:10))
+#'                n_val = c(1:3))
 setup_blanking <- function(data, var_site,var_Id,var_datetime,var_groups = NULL,
                            var_ping_rate, n_val){
   df <- data[,c(var_groups,var_site,var_Id,var_datetime,var_ping_rate)]

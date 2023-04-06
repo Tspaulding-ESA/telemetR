@@ -272,3 +272,21 @@
 #' }
 "conv_thresh"
 
+#' Example Optimum Maximum Blanking Period
+#'
+#' Example output from the `opt_mbp()` function, finding the optimal mbp for
+#' each group and desired convergence threshold.
+#'
+#' @format ## `ex_opt`
+#' A data frame with 1 rows and 5 columns:
+#' \describe{
+#'  \item{fish_type}{Generally a strain, run, and species of fish (e.g.
+#'   Nimbus Fall Chinook = Fall-run Chinook Salmon from Nimbus Hatchery)}
+#'  \item{min_val}{The minimum rSSR value}
+#'  \item{max_val}{The maximum rSSR value}
+#'  \item{threshold}{the rSSR value which represents the `thresh_level` cutoff
+#'   for estimating convergence}
+#'  \item{thresh_level}{The desired convergence level (100-x)}
+#'  \item{opt_mbp}{The identified optimum mbp for the given threshold and group}
+#' }
+"ex_opt"

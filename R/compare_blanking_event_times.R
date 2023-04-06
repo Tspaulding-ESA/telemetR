@@ -23,7 +23,7 @@
 #' # Compare the durations of blanked detection events
 #' duration_compare(event_dur = blanked_detects,
 #'                  var_groups = "fish_type",
-#'                  time_seq = seq(0,10000,3))
+#'                  time_seq = c(1:10))
 duration_compare <- function(event_dur, var_groups=NULL, time_seq){
   time_list <- list()
 
