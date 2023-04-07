@@ -12,16 +12,14 @@ Description:Analyze telemetry datasets generalized to allow
     found in package `filteRjsats` but have been generalized to allow the user
     to define many of the filtering variables. Additionally, this package
     contains scripts used to help identify an optimal maximum blanking period as
-    defined in Capello et al. 2015. The functions were written attempting to 
-    duplicate their efforts, but have not been reviewed by the authors for
-    accuracy. It is included here as is, without warranty. Citation: 
-    Capello M, Robert M, Soria M, Potin G, Itano D, Holland K, et al. (2015) 
-    A Methodological Framework to Estimate the Site Fidelity of Tagged Animals 
-    Using Passive Acoustic Telemetry. PLoS ONE 10(8): e0134002. 
-    <https://doi.org/10.1371/journal.pone.0134002> .
+    defined in Capello et al (2015) <doi:10.1371/journal.pone.0134002>. The 
+    functions were written attempting to duplicate their efforts, but have not 
+    been reviewed by the authors for accuracy. It is included here as is, 
+    without warranty.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: xz
 Imports:
         dplyr,
         tidyr,
