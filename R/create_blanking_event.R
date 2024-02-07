@@ -84,7 +84,7 @@ blanking_event <- function(data,var_site,var_Id,var_datetime,var_groups = NULL,
     )) |>
     dplyr::mutate(duration = as.numeric(difftime(end_time,
                                                  start_time,
-                                                 units = "sec"))
+                                                 units = time_unit))
     ) |>
     dplyr::ungroup()
 
