@@ -59,9 +59,9 @@ blanking_event <- function(data,var_site,var_Id,var_datetime,var_groups = NULL,
   event <- setup |>
     dplyr::ungroup() |>
     dplyr::group_by(dplyr::across(dplyr::all_of(c(var_Id, "n_val")))) |>
-    dplyr::mutate(dplyr::across(var_site, .fns = ~.x == lag(.x), .names = "same_loc"),
-                  dplyr::across(c(var_ping_rate), .fns = ~ .x*n_val, .names = "mbp_n"),
-                  dplyr::across(c(var_datetime),
+    dplyr::mutate(dplyr::across(all_of(var_site), .fns = ~unlist(.x) == lag(unlist(.x)), .names = "same_loc"),
+                  dplyr::across(all_of(var_ping_rate), .fns = ~ .x*n_val, .names = "mbp_n"),
+                  dplyr::across(all_of(var_datetime),
                                 .fns = ~ difftime(.x,
                                                   lag(.x),
                                                   units = time_unit),
